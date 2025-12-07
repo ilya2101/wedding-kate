@@ -4,5 +4,5 @@ services:
   web:
     build: .
     ports:
-      - "79:80"
+      - "78:80"
     restart: unless-stopped
