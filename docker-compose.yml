@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   web:
-    build: ..
+    build: .
     ports:
-      - "80:80"
+      - "79:80"
     restart: unless-stopped
