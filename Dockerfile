@@ -1,15 +1,29 @@
-FROM nginx:alpine
+FROM node:20-alpine AS deps
 
-# Удаляем стандартный контент nginx
-RUN rm -rf /usr/share/nginx/html/*
+ENV PATH="/app/node_modules/.bin:$PATH"
 
-# Копируем сборку Vue из вложенной папки
-COPY dist /usr/share/nginx/html/Wedding-with-Kate/
+WORKDIR /app
 
-# Копируем конфиг nginx
-COPY /nginx.conf /etc/nginx/conf.d/default.conf
+COPY package.json package-lock.json ./
+RUN npm install
 
+
+# ============================ #
+#            BUILD             #
+# ============================ #
+FROM deps AS build
+
+COPY . .
+
+RUN npm run build
+
+
+# ============================ #
+#          PRODUCTION          #
+# ============================ #
+FROM nginx:1.28.0-alpine AS production
+
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
-
- 
