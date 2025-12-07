@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: ''  // пути к js/css с /kate/
+    publicPath: './'  // пути к js/css с /kate/
 }
