@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Показываем главную страницу ТОЛЬКО на маршруте '/' -->
-    <div v-if="$route.path === '/'" class="main-page">
+    <div class="main-page">
       <!-- Фон с кофейным градиентом -->
       <div class="background-gradient"></div>
 
