@@ -1,31 +1,40 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import About from '../views/About.vue'
+import Price from '../views/Price.vue'
+import Reviews from '../views/Reviews.vue'
+import Contacts from '../views/Contacts.vue'
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
+        name: 'home',
         component: Home
     },
     {
-        path: '/price',
-        name: 'Price',
-        component: () => import('../views/Price.vue')
+        path: '/about',
+        name: 'about',
+        component: About
     },
     {
-        path: '/about',
-        name: 'About',
-        component: () => import('../views/About.vue')
+        path: '/price',
+        name: 'price',
+        component: Price
     },
     {
         path: '/reviews',
-        name: 'Reviews',
-        component: () => import('../views/Reviews.vue')
+        name: 'reviews',
+        component: Reviews
+    },
+    {
+        path: '/contacts',
+        name: 'contacts',
+        component: Contacts
     }
 ]
 
 const router = createRouter({
-    history: createWebHistory(''),
+    history: createWebHistory(process.env.BASE_URL),
     routes
 })
 
