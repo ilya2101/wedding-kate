@@ -1,23 +1,19 @@
 <template>
   <div class="contacts-page">
-    <!-- Фон -->
-    <div class="background-gradient"></div>
-
     <div class="contacts-container">
       <!-- Заголовок -->
-      <div class="contacts-header glass-card">
+      <GlassCard class="contacts-header">
         <h1>Контакты</h1>
         <p>Буду рада ответить на все ваши вопросы</p>
-      </div>
+      </GlassCard>
 
       <!-- Основной контент -->
       <div class="contacts-content">
         <!-- Контактная информация -->
-        <div class="contact-info-section glass-card">
+        <GlassCard class="contact-info-section">
           <h3>Свяжитесь со мной</h3>
 
           <div class="contact-items">
-            <!-- Телефон -->
             <div class="contact-item" v-for="contact in contacts" :key="contact.id">
               <div class="contact-icon">{{ contact.icon }}</div>
               <div class="contact-details">
@@ -32,58 +28,62 @@
             <h4>Я в социальных сетях</h4>
             <div class="social-links">
               <a
-                  v-for="social in socials"
-                  :key="social.id"
-                  :href="social.link"
-                  target="_blank"
-                  class="social-link"
+                v-for="social in socials"
+                :key="social.id"
+                :href="social.link"
+                target="_blank"
+                class="social-link"
               >
                 <span class="social-icon">{{ social.icon }}</span>
                 <span class="social-name">{{ social.name }}</span>
               </a>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         <!-- Форма обратной связи -->
-        <div class="contact-form-section glass-card">
+        <GlassCard class="contact-form-section">
           <h3>Или напишите мне</h3>
           <p>Заполните форму, и я свяжусь с вами в ближайшее время</p>
 
           <form @submit.prevent="submitForm" class="contact-form">
             <div class="form-group">
               <input
-                  type="text"
-                  v-model="form.name"
-                  placeholder="Ваше имя"
-                  required
+                type="text"
+                v-model="form.name"
+                placeholder="Ваше имя"
+                required
+                class="form-input"
               >
             </div>
 
             <div class="form-group">
               <input
-                  type="tel"
-                  v-model="form.phone"
-                  placeholder="Номер телефона"
-                  required
+                type="tel"
+                v-model="form.phone"
+                placeholder="Номер телефона"
+                required
+                class="form-input"
               >
             </div>
 
             <div class="form-group">
               <input
-                  type="email"
-                  v-model="form.email"
-                  placeholder="Email"
-                  required
+                type="email"
+                v-model="form.email"
+                placeholder="Email"
+                required
+                class="form-input"
               >
             </div>
 
             <div class="form-group">
               <textarea
-                  v-model="form.message"
-                  placeholder="Ваше сообщение"
-                  rows="5"
-                  required
+                v-model="form.message"
+                placeholder="Ваше сообщение"
+                rows="5"
+                required
+                class="form-input"
               ></textarea>
             </div>
 
@@ -94,7 +94,7 @@
               </label>
             </div>
 
-            <button type="submit" class="submit-btn">Отправить сообщение</button>
+            <button type="submit" class="btn btn-primary">Отправить сообщение</button>
           </form>
 
           <!-- Сообщение об успешной отправке -->
@@ -102,11 +102,11 @@
             <div class="success-icon">✓</div>
             <p>Спасибо за обращение! Я свяжусь с вами в ближайшее время.</p>
           </div>
-        </div>
+        </GlassCard>
       </div>
 
       <!-- Карта/Дополнительная информация -->
-      <div class="additional-info glass-card">
+      <GlassCard class="additional-info">
         <div class="info-block">
           <h4>Время ответа</h4>
           <p>Обычно я отвечаю в течение 2-3 часов в рабочее время</p>
@@ -119,19 +119,24 @@
           <h4>Консультация</h4>
           <p>Первая встреча-знакомство — бесплатно</p>
         </div>
-      </div>
+      </GlassCard>
 
       <!-- Кнопка назад -->
       <div class="back-section">
-        <router-link to="/" class="back-btn">← На главную</router-link>
+        <router-link to="/" class="btn btn-secondary">← На главную</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import GlassCard from '@/components/GlassCard.vue'
+
 export default {
   name: 'Contacts',
+  components: {
+    GlassCard
+  },
   data() {
     return {
       contacts: [
@@ -140,7 +145,7 @@ export default {
           icon: '📞',
           label: 'Телефон',
           value: '+7 (993) 210-05-10',
-          link: 'tel:+79991234567'
+          link: 'tel:+79932100510'
         },
         {
           id: 2,
@@ -160,14 +165,13 @@ export default {
       socials: [
         {
           id: 1,
-          icon: '📱',
+          icon: '💬',
           name: 'ВКонтакте',
           link: 'https://vk.com/im/convo/307850408?entrypoint=conversations_search'
         },
-
         {
-          id: 3,
-          icon: '📱',
+          id: 2,
+          icon: '✈️',
           name: 'Telegram',
           link: 'https://web.telegram.org/k/#@katerinaaesa'
         }
@@ -184,13 +188,8 @@ export default {
   },
   methods: {
     submitForm() {
-      // Здесь будет логика отправки формы
       console.log('Форма отправлена:', this.form)
-
-      // Показываем сообщение об успехе
       this.showSuccess = true
-
-      // Очищаем форму
       this.form = {
         name: '',
         phone: '',
@@ -198,8 +197,6 @@ export default {
         message: '',
         agreement: false
       }
-
-      // Скрываем сообщение через 5 секунд
       setTimeout(() => {
         this.showSuccess = false
       }, 5000)
@@ -210,39 +207,14 @@ export default {
 
 <style scoped>
 .contacts-page {
-  min-height: 100vh;
-  padding: 2rem;
-  position: relative;
-}
-
-.background-gradient {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-      135deg,
-      #3d2c2c 0%,
-      #5d4037 25%,
-      #8d6e63 50%,
-      #a1887f 75%,
-      #d7ccc8 100%
-  );
-  background-size: 400% 400%;
-  animation: gradientShift 20s ease infinite;
-  z-index: -1;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  padding: 3rem 0;
+  min-height: calc(100vh - var(--nav-height));
 }
 
 .contacts-container {
   max-width: 1000px;
   margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -251,20 +223,16 @@ export default {
 /* Заголовок */
 .contacts-header {
   text-align: center;
-  padding: 3rem 2rem;
+  padding: 3rem 2rem !important;
 }
 
 .contacts-header h1 {
-  font-family: 'Playfair Display', serif;
   font-size: 3rem;
-  color: #fff8e1;
   margin-bottom: 1rem;
-  font-weight: 400;
 }
 
 .contacts-header p {
   font-size: 1.3rem;
-  color: #d7ccc8;
 }
 
 /* Основной контент */
@@ -274,25 +242,11 @@ export default {
   gap: 2rem;
 }
 
-/* Стили для карточек */
-.glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
 /* Контактная информация */
 .contact-info-section h3,
 .contact-form-section h3,
 .additional-info h4 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  color: #fff8e1;
   margin-bottom: 1.5rem;
-  font-weight: 400;
 }
 
 .contact-items {
@@ -308,8 +262,8 @@ export default {
   gap: 1.5rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-fast);
 }
 
 .contact-item:hover {
@@ -323,33 +277,32 @@ export default {
 }
 
 .contact-details h4 {
-  color: #d4af37;
-  font-size: 1rem;
+  color: var(--color-gold);
+  font-size: 0.9rem;
   margin-bottom: 0.3rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .contact-value {
-  color: #fff8e1;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: color 0.3s ease;
+  color: var(--color-cream-light);
+  font-size: 1.1rem;
+  transition: var(--transition-fast);
 }
 
 .contact-value:hover {
-  color: #d4af37;
+  color: var(--color-gold);
 }
 
 /* Социальные сети */
 .social-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--glass-border);
   padding-top: 2rem;
 }
 
 .social-section h4 {
-  color: #d7ccc8;
-  font-size: 1.2rem;
+  color: var(--color-cream);
+  font-size: 1.1rem;
   margin-bottom: 1rem;
 }
 
@@ -365,14 +318,14 @@ export default {
   gap: 1rem;
   padding: 0.8rem 1rem;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  color: #fff8e1;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-cream);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: var(--transition-fast);
 }
 
 .social-link:hover {
-  background: rgba(212, 175, 55, 0.2);
+  background: var(--color-gold-light);
   transform: translateX(5px);
 }
 
@@ -386,7 +339,6 @@ export default {
 
 /* Форма обратной связи */
 .contact-form-section p {
-  color: #d7ccc8;
   margin-bottom: 2rem;
 }
 
@@ -400,35 +352,10 @@ export default {
   width: 100%;
 }
 
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  color: #fff8e1;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #d4af37;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: rgba(215, 204, 200, 0.5);
-}
-
 .checkbox-label {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  color: #d7ccc8;
   cursor: pointer;
 }
 
@@ -438,31 +365,13 @@ export default {
   cursor: pointer;
 }
 
-.submit-btn {
-  padding: 1.2rem;
-  background: rgba(212, 175, 55, 0.2);
-  border: 1px solid #d4af37;
-  border-radius: 12px;
-  color: #fff8e1;
-  font-size: 1.2rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-  background: rgba(212, 175, 55, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
-}
-
 /* Сообщение об успехе */
 .success-message {
   margin-top: 2rem;
   padding: 1.5rem;
   background: rgba(76, 175, 80, 0.2);
   border: 1px solid #4CAF50;
-  border-radius: 12px;
+  border-radius: var(--border-radius-sm);
   text-align: center;
   animation: fadeIn 0.5s ease;
 }
@@ -474,7 +383,6 @@ export default {
 }
 
 .success-message p {
-  color: #fff8e1;
   margin: 0;
 }
 
@@ -483,7 +391,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  padding: 2rem;
+  padding: 2rem !important;
 }
 
 .info-block {
@@ -491,14 +399,13 @@ export default {
 }
 
 .info-block h4 {
-  font-size: 1.2rem;
-  color: #d4af37;
+  color: var(--color-gold);
+  font-size: 1.1rem;
   margin-bottom: 0.5rem;
 }
 
 .info-block p {
-  color: #d7ccc8;
-  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
 /* Кнопка назад */
@@ -506,28 +413,14 @@ export default {
   text-align: center;
 }
 
-.back-btn {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  color: #fff8e1;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-}
-
-.back-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
 /* Адаптивность */
 @media (max-width: 768px) {
   .contacts-page {
-    padding: 1rem;
+    padding: 2rem 0;
+  }
+
+  .contacts-container {
+    padding: 0 1rem;
   }
 
   .contacts-content {
@@ -544,22 +437,6 @@ export default {
   }
 }
 
-/* Анимации */
-.glass-card {
-  animation: slideUp 0.8s ease-out forwards;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -570,8 +447,4 @@ export default {
     transform: translateY(0);
   }
 }
-
-.contact-info-section { animation-delay: 0.1s; }
-.contact-form-section { animation-delay: 0.2s; }
-.additional-info { animation-delay: 0.3s; }
 </style>

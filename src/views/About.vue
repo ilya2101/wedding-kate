@@ -1,37 +1,32 @@
 <template>
   <div class="about-page">
-    <!-- Фон -->
-    <div class="background-gradient"></div>
-
     <div class="about-container">
       <!-- Заголовок -->
-      <div class="about-header glass-card">
+      <GlassCard class="about-header">
         <h1>Обо мне</h1>
         <p>Ваш персональный организатор свадеб</p>
-      </div>
+      </GlassCard>
 
       <!-- Основной контент -->
       <div class="about-content">
         <!-- Фото и основная инфа -->
-        <div class="profile-section glass-card">
+        <GlassCard class="profile-section">
           <div class="profile-image">
             <img src="@/assets/kate-photo.jpg" alt="Екатерина" class="kate-photo">
           </div>
           <div class="profile-info">
             <h2>Екатерина</h2>
-
             <div class="tagline">Создаю атмосферные и спокойные свадьбы без стресса</div>
-
             <div class="description">
               <p><strong>Wedding with Kate</strong> — проект персональной свадебной организации.</p>
               <p>Создаю атмосферные и спокойные свадьбы без стресса. Помогаю парам наслаждаться
                 своим днем без лишних хлопот и переживаний.</p>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         <!-- Преимущества -->
-        <div class="advantages-section glass-card">
+        <GlassCard class="advantages-section">
           <h3>Почему выбирают меня</h3>
           <div class="advantages-grid">
             <div class="advantage-item" v-for="advantage in advantages" :key="advantage.id">
@@ -42,10 +37,10 @@
               </div>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         <!-- Опыт и философия -->
-        <div class="philosophy-section glass-card">
+        <GlassCard class="philosophy-section">
           <h3>Моя философия</h3>
           <div class="philosophy-content">
             <div class="philosophy-text">
@@ -65,29 +60,34 @@
               </div>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         <!-- Призыв к действию -->
-        <div class="cta-section glass-card">
+        <GlassCard class="cta-section">
           <div class="cta-content">
             <h3>Готова создать вашу идеальную свадьбу</h3>
             <p>Давайте познакомимся и обсудим ваши мечты</p>
-            <router-link to="/contacts" class="cta-button">Связаться со мной</router-link>
+            <router-link to="/contacts" class="btn btn-primary">Связаться со мной</router-link>
           </div>
-        </div>
+        </GlassCard>
       </div>
 
       <!-- Кнопка назад -->
       <div class="back-section">
-        <router-link to="/" class="back-btn">← На главную</router-link>
+        <router-link to="/" class="btn btn-secondary">← На главную</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import GlassCard from '@/components/GlassCard.vue'
+
 export default {
   name: 'About',
+  components: {
+    GlassCard
+  },
   data() {
     return {
       advantages: [
@@ -129,39 +129,14 @@ export default {
 
 <style scoped>
 .about-page {
-  min-height: 100vh;
-  padding: 2rem;
-  position: relative;
-}
-
-.background-gradient {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-      135deg,
-      #3d2c2c 0%,
-      #5d4037 25%,
-      #8d6e63 50%,
-      #a1887f 75%,
-      #d7ccc8 100%
-  );
-  background-size: 400% 400%;
-  animation: gradientShift 20s ease infinite;
-  z-index: -1;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  padding: 3rem 0;
+  min-height: calc(100vh - var(--nav-height));
 }
 
 .about-container {
   max-width: 1000px;
   margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -170,20 +145,16 @@ export default {
 /* Заголовок */
 .about-header {
   text-align: center;
-  padding: 3rem 2rem;
+  padding: 3rem 2rem !important;
 }
 
 .about-header h1 {
-  font-family: 'Playfair Display', serif;
   font-size: 3rem;
-  color: #fff8e1;
   margin-bottom: 1rem;
-  font-weight: 400;
 }
 
 .about-header p {
   font-size: 1.3rem;
-  color: #d7ccc8;
 }
 
 /* Профиль */
@@ -203,49 +174,32 @@ export default {
   max-width: 280px;
   height: 350px;
   object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .profile-info h2 {
-  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
-  color: #fff8e1;
   margin-bottom: 0.5rem;
-  font-weight: 400;
-}
-
-.age {
-  font-size: 1.3rem;
-  color: #d4af37;
-  margin-bottom: 1rem;
-  font-weight: 500;
 }
 
 .tagline {
   font-size: 1.4rem;
-  color: #d7ccc8;
   font-style: italic;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .description p {
-  color: #d7ccc8;
-  line-height: 1.7;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
 }
 
 /* Преимущества */
 .advantages-section h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  color: #fff8e1;
   text-align: center;
   margin-bottom: 2rem;
-  font-weight: 400;
 }
 
 .advantages-grid {
@@ -260,8 +214,8 @@ export default {
   gap: 1.5rem;
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  transition: all 0.3s ease;
+  border-radius: var(--border-radius-md);
+  transition: var(--transition-fast);
 }
 
 .advantage-item:hover {
@@ -275,24 +229,19 @@ export default {
 }
 
 .advantage-text h4 {
-  color: #fff8e1;
+  color: var(--color-cream-light);
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
 .advantage-text p {
-  color: #d7ccc8;
-  line-height: 1.5;
+  font-size: 1rem;
 }
 
 /* Философия */
 .philosophy-section h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  color: #fff8e1;
   margin-bottom: 2rem;
-  font-weight: 400;
 }
 
 .philosophy-content {
@@ -302,8 +251,6 @@ export default {
 }
 
 .philosophy-text p {
-  color: #d7ccc8;
-  line-height: 1.7;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
 }
@@ -318,18 +265,17 @@ export default {
   text-align: center;
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  border-radius: var(--border-radius-sm);
 }
 
 .stat-number {
   font-size: 2.2rem;
-  color: #d4af37;
+  color: var(--color-gold);
   font-weight: 300;
   margin-bottom: 0.5rem;
 }
 
 .stat-label {
-  color: #d7ccc8;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -338,40 +284,16 @@ export default {
 /* CTA секция */
 .cta-section {
   text-align: center;
-  padding: 3rem;
+  padding: 3rem !important;
 }
 
 .cta-content h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  color: #fff8e1;
   margin-bottom: 1rem;
-  font-weight: 400;
 }
 
 .cta-content p {
-  color: #d7ccc8;
-  font-size: 1.2rem;
   margin-bottom: 2rem;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 1.2rem 2.5rem;
-  background: rgba(212, 175, 55, 0.2);
-  border: 1px solid #d4af37;
-  border-radius: 12px;
-  color: #fff8e1;
-  text-decoration: none;
   font-size: 1.2rem;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.cta-button:hover {
-  background: rgba(212, 175, 55, 0.3);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
 }
 
 /* Кнопка назад */
@@ -380,28 +302,14 @@ export default {
   margin-top: 2rem;
 }
 
-.back-btn {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  color: #fff8e1;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-}
-
-.back-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
 /* Адаптивность */
 @media (max-width: 768px) {
   .about-page {
-    padding: 1rem;
+    padding: 2rem 0;
+  }
+
+  .about-container {
+    padding: 0 1rem;
   }
 
   .profile-section {
@@ -433,26 +341,9 @@ export default {
   .advantages-grid {
     grid-template-columns: 1fr;
   }
-}
 
-/* Анимации */
-.glass-card {
-  animation: slideUp 0.8s ease-out forwards;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .about-header h1 {
+    font-size: 2.2rem;
   }
 }
-
-.profile-section { animation-delay: 0.1s; }
-.advantages-section { animation-delay: 0.2s; }
-.philosophy-section { animation-delay: 0.3s; }
-.cta-section { animation-delay: 0.4s; }
 </style>
